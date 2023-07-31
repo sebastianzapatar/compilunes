@@ -13,6 +13,7 @@ from typing import (
 class TokenType(Enum):
     ASSING=auto()
     COMMA=auto()
+    DIVISION=auto()
     EQ=auto()
     EOF=auto()
     FOR=auto()
@@ -28,6 +29,8 @@ class TokenType(Enum):
     LT=auto()
     LTE=auto()
     MINUS=auto()
+    MULTIPLICATION=auto()
+    NEGATION=auto()
     NEQ=auto()
     PLUS=auto()
     RBRACE=auto()

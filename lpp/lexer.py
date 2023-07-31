@@ -21,6 +21,11 @@ class Lexer:
                 token = self._make_two_character_token(TokenType.EQ)
             else:
                 token = Token(TokenType.ASSIGN, self._character)
+        elif match(r'^>$', self._character):
+            if self._peek_character() == '=':
+                token = self._make_two_character_token(TokenType.GTE)
+            else:
+                token = Token(TokenType.GT, self._character)
         elif match(r'^\+$',self._character):
             token=Token(TokenType.PLUS,self._character)
         elif match(r'^$',self._character):
