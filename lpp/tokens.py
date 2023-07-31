@@ -13,15 +13,22 @@ from typing import (
 class TokenType(Enum):
     ASSING=auto()
     COMMA=auto()
+    EQ=auto()
     EOF=auto()
+    FOR=auto()
     FUNCTION=auto()
+    GT=auto()
+    GTE=auto()
     IDENT=auto()
     ILLEGAL=auto()
     INT=auto()
     LBRACE=auto()
     LET=auto()
     LPAREN=auto()
+    LT=auto()
+    LTE=auto()
     MINUS=auto()
+    NEQ=auto()
     PLUS=auto()
     RBRACE=auto()
     RPAREN=auto()
@@ -40,6 +47,7 @@ class Token(NamedTuple):
 def lookup_token_type(literal:str)->TokenType:
     keywords:Dict[str,TokenType]={
         'variable':TokenType.LET,
-        'funcion':TokenType.FUNCTION
+        'funcion':TokenType.FUNCTION,
+        'para':TokenType.FOR
     }
     return keywords.get(literal,TokenType.IDENT)
