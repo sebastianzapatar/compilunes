@@ -2,9 +2,12 @@ from enum import (
     auto,
     Enum,
     unique,
+    
+)
+from typing import (
+    NamedTuple,
     Dict
 )
-from typing import NamedTuple
 
 @unique
 class TokenType(Enum):

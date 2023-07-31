@@ -1,5 +1,5 @@
 from re import match
-from tokens import(
+from lpp.tokens import(
     Token,
     TokenType
 )
@@ -10,7 +10,8 @@ class Lexer:
         self._character:str=''
         self._read_positon:int=0
         self._position:int = 0
-        self._character=self._read_character()
+        
+
     def next_token(self)->Token:
         if match(r'^=$',self._character):
             token=Token(TokenType.ASSING,self._character)
