@@ -35,6 +35,7 @@ class TokenType(Enum):
     PLUS=auto()
     RBRACE=auto()
     RPAREN=auto()
+    RETURN=auto()
     SEMICOLON=auto()
 
 
@@ -51,6 +52,7 @@ def lookup_token_type(literal:str)->TokenType:
     keywords:Dict[str,TokenType]={
         'variable':TokenType.LET,
         'funcion':TokenType.FUNCTION,
-        'para':TokenType.FOR
+        'para':TokenType.FOR,
+        'regresa':TokenType.RETURN
     }
     return keywords.get(literal,TokenType.IDENT)
