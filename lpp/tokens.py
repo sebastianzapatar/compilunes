@@ -14,6 +14,8 @@ class TokenType(Enum):
     ASSING=auto()
     COMMA=auto()
     DIVISION=auto()
+    ELSE=auto()
+    ELSEIF=auto()
     EQ=auto()
     EOF=auto()
     FOR=auto()
@@ -21,6 +23,7 @@ class TokenType(Enum):
     GT=auto()
     GTE=auto()
     IDENT=auto()
+    IF=auto()
     ILLEGAL=auto()
     INT=auto()
     LBRACE=auto()
@@ -53,6 +56,9 @@ def lookup_token_type(literal:str)->TokenType:
         'variable':TokenType.LET,
         'funcion':TokenType.FUNCTION,
         'para':TokenType.FOR,
-        'regresa':TokenType.RETURN
+        'regresa':TokenType.RETURN,
+        'si':TokenType.IF,
+        'si_no':TokenType.ELSE,
+        'si_no_si':TokenType.ELSEIF
     }
     return keywords.get(literal,TokenType.IDENT)
