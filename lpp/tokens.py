@@ -19,6 +19,7 @@ class TokenType(Enum):
     ELSEIF=auto()
     EQ=auto()
     EOF=auto()
+    FALSE=auto()
     FOR=auto()
     FUNCTION=auto()
     GT=auto()
@@ -41,6 +42,7 @@ class TokenType(Enum):
     RPAREN=auto()
     RETURN=auto()
     SEMICOLON=auto()
+    TRUE=auto()
 
 
 
@@ -60,6 +62,8 @@ def lookup_token_type(literal:str)->TokenType:
         'regresa':TokenType.RETURN,
         'si':TokenType.IF,
         'si_no':TokenType.ELSE,
-        'si_no_si':TokenType.ELSEIF
+        'si_no_si':TokenType.ELSEIF,
+        'verdadero':TokenType.TRUE,
+        'falso':TokenType.FALSE
     }
     return keywords.get(literal,TokenType.IDENT)

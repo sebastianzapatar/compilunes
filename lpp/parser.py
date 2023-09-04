@@ -126,3 +126,37 @@ class Parser:
             return self._parse_return_statement()
         else:
             return None
+        
+    def _parse_boolean(self)->Boolean:
+        assert self._current_token is not None
+
+        return Boolean(token=self._current_token,
+                       value=self._current_token.token_type==TokenType.TRUE)
+    
+    def _parse_integer(self)->Optional[Integer]:
+        assert self._current_token is not None
+        integer=Integer(token=self._current_token)
+
+        try:
+            integer.value=int(self._current_token.literal)
+        except ValueError:
+            message:str=f'Error al parsear {self._current_token.literal}'
+            self.errors.append(message)
+            return None
+
+        return integer
+    def _parse_block(self)->Block:
+        assert self._current_token is not None
+        block_statement=Block(token=self._current_token,statements=[])
+
+        self._advance_tokens()
+
+        while  self._current_token.token_type!=TokenType.RBRACE \
+            and self._current_token.token_type!=TokenType.EOF:
+            statement=self._parse_statement()
+            if statement:
+                block_statement.statements.append(statement)
+
+            self._advance_tokens()
+
+        return block_statement
