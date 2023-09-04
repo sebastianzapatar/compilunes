@@ -13,6 +13,7 @@ from typing import (
 class TokenType(Enum):
     ASSING=auto()
     COMMA=auto()
+    DIF=auto()
     DIVISION=auto()
     ELSE=auto()
     ELSEIF=auto()

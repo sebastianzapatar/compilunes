@@ -1,6 +1,9 @@
+from enum import IntEnum
 from typing import (
     Optional,
-    List
+    List,
+    Callable,
+    Dict
 )
 from lpp.ast import (
     Identifier,
@@ -8,7 +11,16 @@ from lpp.ast import (
     Statement,
     Expression,
     Program,
-    ReturnStatements
+    ReturnStatements,
+    Call,
+    ExpressionStatement,
+    Function,
+    If,
+    Infix,
+    Integer,
+    Prefix,
+    Block,
+    Boolean
 )
 from lpp.tokens import(
     Token,
@@ -16,7 +28,36 @@ from lpp.tokens import(
 )
 from lpp.lexer import Lexer
 
+PrefixParseFn=Callable[[],Optional[Expression]]
+InfixParseFn = Callable[[Expression],Optional[Expression]]
+PrefixParseFns=Dict[TokenType,PrefixParseFn]
+InfixParseFns=Dict[TokenType,InfixParseFn]
 
+
+class Precedence(IntEnum):
+    LOWEST=1
+    EQUAL=2
+    LESSGREATER=3
+    SUM=4
+    PRODUCT=5
+    POW=6
+    PREFIX=7
+    CALL=8
+
+PRECEDNCES:Dict[TokenType,Precedence]={
+    TokenType.EQ:Precedence.EQUAL,
+    TokenType.LTE:Precedence.LESSGREATER,
+    TokenType.LT:Precedence.LESSGREATER,
+    TokenType.GT:Precedence.LESSGREATER,
+    TokenType.GTE:Precedence.LESSGREATER,
+    TokenType.PLUS:Precedence.SUM,
+    TokenType.MINUS:Precedence.SUM,
+    TokenType.DIVISION:Precedence.PRODUCT,
+    TokenType.MULTIPLICATION:Precedence.PRODUCT,
+    TokenType.LPAREN: Precedence.CALL,
+    TokenType.DIF:Precedence.EQUAL
+}
+    
 class Parser:
 
     def __init__(self, lexer: Lexer) -> None:
