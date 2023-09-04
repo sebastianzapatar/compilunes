@@ -71,3 +71,21 @@ class ReturnStatements(Statement):
     
     def __str__(self) -> str:
         return f'{self.token_literal()} {str(self.return_value)}'
+    
+class Integer(Expression):
+    def __init__(self,token:Token ,
+                 value:Optional[int]=None)->None:
+        super().__init__(token)
+        self.value=value
+    def __str__(self)->str:
+        return str(self.value)
+
+class Boolean(Expression):
+    def __init__(self,token:Token,
+                 value:Optional[bool]=None)->None:
+        super().__init__(token)
+        self.value=value
+    def __str__(self)->str:
+        return self.token_literal()
+
+

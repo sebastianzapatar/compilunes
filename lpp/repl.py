@@ -4,7 +4,8 @@ from lpp.tokens import (
     TokenType,
 )
 
-
+from lpp.parser import Parser
+from lpp.ast import Program
 EOF_TOKEN: Token = Token(TokenType.EOF, '')
 
 
@@ -12,5 +13,9 @@ def start_repl() -> None:
     while (source := input('>> ')) != 'salir()':
         lexer: Lexer = Lexer(source)
 
-        while (token := lexer.next_token()) != EOF_TOKEN:
-            print(token)
+        parser:Parser=Parser(lexer)
+        program:Program=parser.parse_program()
+
+        print(program)
+
+
