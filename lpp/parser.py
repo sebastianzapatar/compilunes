@@ -48,7 +48,7 @@ class Precedence(IntEnum):
 
 PRECEDENCES: Dict[TokenType, Precedence] = {
     TokenType.EQ: Precedence.EQUALS,
-    TokenType.DIF: Precedence.EQUALS,
+    TokenType.NOT_EQ: Precedence.EQUALS,
     TokenType.LT: Precedence.LESSGREATER,
     TokenType.GT: Precedence.LESSGREATER,
     TokenType.PLUS: Precedence.SUM,
@@ -404,7 +404,7 @@ class Parser:
             TokenType.DIVISION: self._parse_infix_expression,
             TokenType.MULTIPLICATION: self._parse_infix_expression,
             TokenType.EQ: self._parse_infix_expression,
-            TokenType.DIF: self._parse_infix_expression,
+            TokenType.NOT_EQ: self._parse_infix_expression,
             TokenType.LT: self._parse_infix_expression,
             TokenType.GT: self._parse_infix_expression,
             TokenType.LPAREN: self._parse_call,
