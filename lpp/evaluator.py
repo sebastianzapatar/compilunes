@@ -8,7 +8,14 @@ import lpp.ast as ast
 from lpp.object import (
     Integer,
     Object,
+    Boolean,
+    Null
+
 )
+
+TRUE = Boolean(True)
+FALSE = Boolean(False)
+NULL = Null()
 
 
 def evaluate(node: ast.ASTNode) -> Optional[Object]:
@@ -23,6 +30,12 @@ def evaluate(node: ast.ASTNode) -> Optional[Object]:
 
         assert node.expression is not None
         return evaluate(node.expression)
+    elif node_type == ast.Boolean:
+        node = cast(ast.Boolean, node)
+
+        assert node.value is not None
+        return _to_boolean_object(node.value)
+    
     elif node_type == ast.Integer:
         node = cast(ast.Integer, node)
 
@@ -30,6 +43,9 @@ def evaluate(node: ast.ASTNode) -> Optional[Object]:
         return Integer(node.value)
 
     return None
+
+def _to_boolean_object(value: bool) -> Boolean:
+    return TRUE if value else FALSE
 
 
 def _evaluate_statements(statements: List[ast.Statement]) -> Optional[Object]:
