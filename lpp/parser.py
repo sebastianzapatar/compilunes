@@ -1,32 +1,34 @@
 from enum import IntEnum
 from typing import (
-    Optional,
-    List,
     Callable,
-    Dict
+    Dict,
+    List,
+    Optional,
 )
+
 from lpp.ast import (
-    Identifier,
-    LetStatement,
-    Statement,
-    Expression,
-    Program,
-    ReturnStatements,
+    Block,
+    Boolean,
     Call,
+    Expression,
     ExpressionStatement,
     Function,
+    Identifier,
     If,
     Infix,
     Integer,
+    LetStatement,
     Prefix,
-    Block,
-    Boolean
-)
-from lpp.tokens import(
-    Token,
-    TokenType
+    Program,
+    ReturnStatement,
+    Statement,
 )
 from lpp.lexer import Lexer
+from lpp.tokens import (
+    Token,
+    TokenType,
+)
+
 
 PrefixParseFn = Callable[[], Optional[Expression]]
 InfixParseFn = Callable[[Expression], Optional[Expression]]
@@ -185,7 +187,7 @@ class Parser:
         left_expression = prefix_parse_fn()
 
         assert self._peek_token is not None
-        while self._peek_token.token_type != TokenType.SEMICOLON and \
+        while not self._peek_token.token_type == TokenType.SEMICOLON and \
                 precedence < self._peek_precedence():
             try:
                 infix_parse_fn = self._infix_parse_fns[self._peek_token.token_type]
@@ -365,9 +367,9 @@ class Parser:
 
         return prefix_expression
 
-    def _parse_return_statement(self) -> Optional[ReturnStatements]:
+    def _parse_return_statement(self) -> Optional[ReturnStatement]:
         assert self._current_token is not None
-        return_statement = ReturnStatements(token=self._current_token)
+        return_statement = ReturnStatement(token=self._current_token)
 
         self._advance_tokens()
 
