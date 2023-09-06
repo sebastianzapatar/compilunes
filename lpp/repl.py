@@ -19,6 +19,7 @@ def _print_parse_errors(errors: List[str]):
         print(error)
 
 def start_repl() -> None:
+    #Se hace esto para que sea multilinea y guarden todos los datos no solo de una línea
     scanned: List[str] = []
 
     while (source := input('>> ')) != 'salir()':
