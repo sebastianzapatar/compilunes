@@ -6,13 +6,15 @@ from enum import (
     auto,
     Enum,
 )
+from typing import Dict
 
 
 class ObjectType(Enum):
     BOOLEAN = auto()
+    ERROR = auto()
     INTEGER = auto()
     NULL = auto()
-    RETURN=auto()
+    RETURN = auto()
 
 
 class Object(ABC):
@@ -69,3 +71,30 @@ class Return(Object):
 
     def inspect(self) -> str:
         return self.value.inspect()
+
+
+class Error(Object):
+
+    def __init__(self, message: str) -> None:
+        self.message = message
+
+    def type(self) -> ObjectType:
+        return ObjectType.ERROR
+
+    def inspect(self) -> str:
+        return f'Error: {self.message}'
+
+
+class Environment(Dict):
+
+    def __init__(self):
+        self._store = dict()
+
+    def __getitem__(self, key):
+        return self._store[key]
+
+    def __setitem__(self, key, value):
+        self._store[key] = value
+
+    def __delitem__(self, key):
+        del self._store[key]
