@@ -20,7 +20,18 @@ TRUE = Boolean(True)
 FALSE = Boolean(False)
 NULL = Null()
 
-
+"""
+Cuando se hace la llamada un return, se cambia el valor para devolver
+Se utiliza el patrón de diseño singlenton para solo crear un objeto boolean
+Se evalua primero el entero, luego se evalua el boolean
+3 + 7 * 8;
+-5;
+--78;
+!!!!verdadero
+si(verdadero){10}si_no{falso};
+si(4==10){verdadero}si_no{falso};
+si(7!=47){regresa 10}si_no{regresa 20}; 10;
+"""
 
 def evaluate(node: ast.ASTNode) -> Optional[Object]:
     node_type: Type = type(node)
