@@ -22,6 +22,7 @@ from lpp.ast import (
     Program,
     ReturnStatement,
     Statement,
+    StringLiteral
 )
 from lpp.lexer import Lexer
 from lpp.tokens import (
@@ -421,4 +422,10 @@ class Parser:
             TokenType.MINUS: self._parse_prefix_expression,
             TokenType.NEGATION: self._parse_prefix_expression,
             TokenType.TRUE: self._parse_boolean,
+            TokenType.STRING: self._parse_string_literal,
         }
+    
+    def _parse_string_literal(self) -> Expression:
+        assert self._current_token is not None
+        return StringLiteral(token=self._current_token,
+                             value=self._current_token.literal)

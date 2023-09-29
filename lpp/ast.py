@@ -230,3 +230,14 @@ class Call(Expression):
         args: str = ', '.join(arg_list)
 
         return f'{str(self.function)}({args})'
+    
+class StringLiteral(Expression):
+
+    def __init__(self,
+                 token: Token,
+                 value: str) -> None:
+        super().__init__(token)
+        self.value = value
+
+    def __str__(self) -> str:
+        return super().__str__()
