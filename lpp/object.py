@@ -12,6 +12,7 @@ from typing import (
     List,
     Optional,
 )
+from typing_extensions import Protocol
 from lpp.ast import (
     Block,
     Identifier,
@@ -25,6 +26,7 @@ class ObjectType(Enum):
     RETURN = auto()
     FUNCTION = auto()
     STRING = auto()
+    BUILTIN = auto()
 
 
 class Object(ABC):
@@ -145,4 +147,18 @@ class String(Object):
     def inspect(self) -> str:
         return self.value
     
+class BuiltinFunction(Protocol):
 
+    def __call__(self, *args: Object) -> Object: ...
+
+
+class Builtin(Object):
+
+    def __init__(self, fn: BuiltinFunction) -> None:
+        self.fn = fn
+
+    def type(self) -> ObjectType:
+        return ObjectType.BUILTIN
+
+    def inspect(self) -> str:
+        return 'builtin function'
