@@ -6,8 +6,16 @@ from enum import (
     auto,
     Enum,
 )
-from typing import Dict
-
+ 
+from typing import (
+    Dict,
+    List,
+    Optional,
+)
+from lpp.ast import (
+    Block,
+    Identifier,
+)
 
 class ObjectType(Enum):
     BOOLEAN = auto()
@@ -15,6 +23,7 @@ class ObjectType(Enum):
     INTEGER = auto()
     NULL = auto()
     RETURN = auto()
+    FUNCTION = auto()
 
 
 class Object(ABC):
@@ -87,14 +96,39 @@ class Error(Object):
 
 class Environment(Dict):
 
-    def __init__(self):
-        self._store = dict()
+    def __init__(self, outer = None):
+        self._store: Dict = dict()
+        self._outer = outer
 
     def __getitem__(self, key):
-        return self._store[key]
+        try:
+            return self._store[key]
+        except KeyError as e:
+            if self._outer is not None:
+                return self._outer[key]
+
+            raise e
 
     def __setitem__(self, key, value):
         self._store[key] = value
 
     def __delitem__(self, key):
         del self._store[key]
+
+class Function(Object):
+
+    def __init__(self,
+                 parameters: List[Identifier],
+                 body: Block,
+                 env: Environment) -> None:
+        self.parameters = parameters
+        self.body = body
+        self.env = env
+
+    def type(self) -> ObjectType:
+        return ObjectType.FUNCTION
+
+    def inspect(self) -> str:
+        params: str = ', '.join([str(param) for param in self.parameters])
+
+        return 'procedimiento({}) {{\n{}\n}}'.format(params, str(self.body))
